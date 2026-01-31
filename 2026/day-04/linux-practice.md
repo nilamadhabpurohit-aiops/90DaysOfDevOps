@@ -116,12 +116,12 @@ Jan 31 13:41:11 ubuntu kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009
 ```
 ## Mini Troubleshooting Steps
 
-####Problem:
+#### Problem:
 Need to verify whether **SSH service* is working correctly
 
-####Steps:
+#### Steps:
 - Checked running processes using ps and pgrep
 - Verified service status using systemctl status ssh
 - Reviewed service logs using journalctl -u ssh
-####Conclusion:
+#### Conclusion:
 - SSH service is running normally with no errors
