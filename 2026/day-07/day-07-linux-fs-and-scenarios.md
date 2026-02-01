@@ -124,7 +124,9 @@ Role: Separates third-party applications from core system directories.
 I would use this when: Managing custom or vendor software
 
 ### Hands-on Tasks
+
 <img width="2132" height="1006" alt="image" src="https://github.com/user-attachments/assets/c185fcc2-5521-4d3e-84a1-f1f2f1de55da" />
+
 ```bash
 # Find the largest log file in /var/log
 du -sh /var/log/* 2>/dev/null | sort -h | tail -5
@@ -135,6 +137,7 @@ cat /etc/hostname
 # Check your home directory
 ls -la ~
 ```
+
 Observations: 
 - Identifies log files consuming the most disk space
 - Displays the system hostname
