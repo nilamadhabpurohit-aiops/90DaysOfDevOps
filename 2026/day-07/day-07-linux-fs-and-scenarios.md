@@ -2,7 +2,7 @@
 
 ---
 
-## Part 1: Linux File System Hierarchy 
+## Part 1: Linux File System Hierarchy**** 
 
 The Linux File System Hierarchy is organized under a single root directory /, 
 from which all other directories branch. Each directory has a specific role in system operation, user data management, and hardware interaction. 
@@ -123,7 +123,7 @@ Purpose: Stores software packages not included with the base system.
 Role: Separates third-party applications from core system directories.
 I would use this when: Managing custom or vendor software
 
-### Hands-on Tasks
+### Hands-on Tasks: 
 
 <img width="2132" height="1006" alt="image" src="https://github.com/user-attachments/assets/c185fcc2-5521-4d3e-84a1-f1f2f1de55da" />
 
@@ -142,4 +142,106 @@ Observations:
 - Identifies log files consuming the most disk space
 - Displays the system hostname
 - Shows user files and hidden configuration files.
+
+## Part 2: Scenario-Based Practice****
+
+### Scenario 1: Service Not Starting
+
+#### ** Problem: A web application service called myapp failed to start after reboot. **
+
+Step 1:
+```bash
+systemctl status myapp
+```
+Why: Checks whether the service is running, failed, or inactive.
+Step 2:
+```bash
+journalctl -u myapp -n 50
+```
+Why: Shows recent logs to understand why the service failed.
+Step 3:
+```bash 
+systemctl is-enabled myapp
+```
+Why: Checks if the service is configured to start automatically on boot.
+Step 4:
+```bash
+systemctl list-units --type=service
+```
+Why: Verifies whether the service exists and is recognized by systemd.
+
+** What I learned: Always check service status first, then logs, then boot configuration. **
+
+### Scenario 2: High CPU Usage
+
+#### ** Problem: Application server is slow due to high CPU usage. **
+
+Step 1:
+```bash
+top
+```
+Why: Shows live CPU usage and highlights processes consuming the most CPU.
+Step 2:
+```bash
+ps aux --sort=-%cpu | head -10
+```
+Why: Lists top CPU-consuming processes in sorted order.
+Step 3:
+```bash
+ps -p <PID> -o pid,pcpu,pmem,cmd
+```
+Why: Inspects the specific process causing high CPU usage.
+
+** What I learned: Identify the process first before restarting or killing anything. **
+
+### Scenario 3: Finding Service Logs
+
+#### ** Problem: Developer asks where logs for the docker service are located. **
+
+Step 1:
+```bash
+systemctl status docker
+```
+Why: Confirms Docker service status and verifies it is systemd-managed.
+Step 2:
+```bash
+journalctl -u docker -n 50
+```
+
+Why: Views recent Docker logs stored in journald.
+Step 3:
+```bash
+journalctl -u docker -f
+```
+Why: Follows Docker logs in real time for live debugging.
+
+** What I learned: systemd services log to journald by default. **
+
+### Scenario 4: File Permissions Issue
+
+#### ** Problem: Script /home/user/backup.sh fails with “Permission denied”.**
+
+Step 1:
+```bash
+ls -l /home/user/backup.sh
+```
+Why: Checks file permissions and confirms execute permission is missing.
+Step 2:
+```bash
+chmod +x /home/user/backup.sh
+```
+Why: Adds execute permission to the script.
+Step 3:
+```bash
+ls -l /home/user/backup.sh
+```
+Why: Verifies that execute permission was successfully added.
+Step 4:
+```bash
+./backup.sh
+```
+Why: Confirms the script now runs correctly.
+
+** What I learned: A script must have execute (x) permission to run. **
+
 
