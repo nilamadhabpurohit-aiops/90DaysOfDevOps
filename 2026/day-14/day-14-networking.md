@@ -97,26 +97,108 @@ Observation: Look for long hops/timeouts.
 
 ### Ports
 ```
-ss -tulpn | head
+ubuntu@ip-172-31-17-136:~$ ss -tulpn | head
+Netid State  Recv-Q Send-Q      Local Address:Port Peer Address:PortProcess
+udp   UNCONN 0      0               127.0.0.1:323       0.0.0.0:*
+udp   UNCONN 0      0              127.0.0.54:53        0.0.0.0:*
+udp   UNCONN 0      0           127.0.0.53%lo:53        0.0.0.0:*
+udp   UNCONN 0      0      172.31.17.136%ens5:68        0.0.0.0:*
+udp   UNCONN 0      0                   [::1]:323          [::]:*
+tcp   LISTEN 0      4096        127.0.0.53%lo:53        0.0.0.0:*
+tcp   LISTEN 0      4096              0.0.0.0:22        0.0.0.0:*
+tcp   LISTEN 0      4096           127.0.0.54:53        0.0.0.0:*
+tcp   LISTEN 0      4096                 [::]:22           [::]:*
 ```
 Observation: Identify one listening port.
 
 ### DNS Resolution
 ```
-dig google.com +short
-nslookup google.com
+ubuntu@ip-172-31-17-136:~$ dig google.com
+
+; <<>> DiG 9.18.39-0ubuntu0.24.04.2-Ubuntu <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 22971
+;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		62	IN	A	142.251.111.139
+google.com.		62	IN	A	142.251.111.113
+google.com.		62	IN	A	142.251.111.100
+google.com.		62	IN	A	142.251.111.138
+google.com.		62	IN	A	142.251.111.101
+google.com.		62	IN	A	142.251.111.102
+
+;; Query time: 2 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Sun Feb 08 11:48:49 UTC 2026
+;; MSG SIZE  rcvd: 135
+
+ubuntu@ip-172-31-17-136:~$ nslookup google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	google.com
+Address: 142.251.111.139
+Name:	google.com
+Address: 142.251.111.138
+Name:	google.com
+Address: 142.251.111.102
+Name:	google.com
+Address: 142.251.111.101
+Name:	google.com
+Address: 142.251.111.100
+Name:	google.com
+Address: 142.251.111.113
+Name:	google.com
+Address: 2607:f8b0:4004:c17::66
+Name:	google.com
+Address: 2607:f8b0:4004:c17::64
+Name:	google.com
+Address: 2607:f8b0:4004:c17::8b
+Name:	google.com
+Address: 2607:f8b0:4004:c17::71
 ```
 Observation: IP resolved.
 
 ### HTTP Check
 ```
-curl -I https://google.com
+ubuntu@ip-172-31-17-136:~$ curl -I https://google.com
+HTTP/2 301
+location: https://www.google.com/
+content-type: text/html; charset=UTF-8
+content-security-policy-report-only: object-src 'none';base-uri 'self';script-src 'nonce-1CHlHAEae4NyQRDgtwIfbg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp
+reporting-endpoints: default="//www.google.com/httpservice/retry/jserror?ei=W3iIaaWNDM7j5NoPp9bE8QI&cad=crash&error=Page%20Crash&jsel=1"
+date: Sun, 08 Feb 2026 11:49:47 GMT
+expires: Tue, 10 Mar 2026 11:49:47 GMT
+cache-control: public, max-age=2592000
+server: gws
+content-length: 220
+x-xss-protection: 0
+x-frame-options: SAMEORIGIN
+alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
 ```
 Observation: Check HTTP status code (200, 301, etc.)
 
 ### Connection Snapshot
 ```
-netstat -an | head
+ubuntu@ip-172-31-17-136:~$ netstat -an | head
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN
+tcp        0      0 127.0.0.54:53           0.0.0.0:*               LISTEN
+tcp        0      0 172.31.17.136:38052     34.237.137.22:80        TIME_WAIT
+tcp        0    484 172.31.17.136:22        171.76.80.62:27957      ESTABLISHED
+tcp        0      0 172.31.17.136:53770     142.251.111.101:443     TIME_WAIT
+tcp6       0      0 :::22                   :::*                    LISTEN
+udp        0      0 127.0.0.1:323           0.0.0.0:*
 ```
 Observation: Count ESTABLISHED vs LISTEN states.
 
@@ -125,37 +207,35 @@ Observation: Count ESTABLISHED vs LISTEN states.
 ## 3. Mini Task – Port Probe
 
 ### Identify a Listening Port
-Example: SSH on port **22**.
+Example from ss -tulpn output:
+Port 22 (SSH) is listening
 
 ### Test Port Reachability
 ```
-nc -zv localhost 22
+ubuntu@ip-172-31-17-136:~$ nc -zv localhost 22
+Connection to localhost (127.0.0.1) 22 port [tcp/ssh] succeeded!
 ```
-Observation: If unreachable → check service status or firewall.
-
+Observation: If unreachable → If it wasn’t, the next step would be to check whether the service is running or if the firewall is blocking it.
+(Note : in AWS we can check the security group)
 ---
 
 ## 4. Reflection
 
+
+
 ### Fastest Signal When Something Breaks
-- Ping for connectivity issues.
-- Curl for application-level issues.
+- `Ping` for connectivity issues.
+- `Curl` for application-level issues.
 
 ### If DNS Fails → Next Layer
 - Check IP connectivity (Layer 3).
 - Inspect DNS config & server reachability.
 
 ### If HTTP 500 Appears
-- Application logs
-- Backend services
+- HTTP 500 means server-side error, not a network issue.
+- Usually caused by app logic, backend, database, or misconfiguration.
 
 ### Two Follow-up Checks in a Real Incident
 1. `curl -v <URL>` for detailed debugging.
 2. `journalctl -u <service>` or container logs.
 
----
-
-## 5. Learn in Public
-Today I practiced ping, traceroute, dig, ss, and curl. Interesting to see traceroute delays at backbone hops and curl redirect chains!
-
-#90DaysOfDevOps #DevOpsKaJosh #TrainWithShubham
