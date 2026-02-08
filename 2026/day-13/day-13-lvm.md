@@ -112,7 +112,7 @@ Output
 Filesystem                        Size  Used Avail Use%
 /dev/mapper/devops--vg-app--data  637M   24K  594M   1%
 ```
-** What I Learned **
+** What I Learned
 - LVM lets you increase or reduce disk size while the system is running, without needing to unmount or stop using the filesystem.
 - Linux storage works in layers: first you create a physical disk (PV), then group disks together (VG), and finally create usable storage areas (LV).
 - Filesystems like ext4 can grow while mounted, and the [resize2fs] command updates the filesystem to use the new space.
