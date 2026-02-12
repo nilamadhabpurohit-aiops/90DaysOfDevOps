@@ -145,15 +145,15 @@ Port 53 → DNS service listening
 
 ## Task 5: Putting It Together
 
-curl http://myapp.com:8080
-– What Concepts Are Used?
--- DNS resolves myapp.com to IP
--- TCP connection established
--- Port 8080 identify the application
--- HTTP runs at application layer
+### curl http://myapp.com:8080
+### What Concepts Are Used?
+- DNS resolves myapp.com to IP
+- TCP connection established
+- Port 8080 identify the application
+- HTTP runs at application layer
 
-- App Can't Reach Database at 10.0.1.50:3306 – What to Check?
--- Is port 3306 open?
--- Is the database service running?
--- Is firewall/security group allowing traffic?
--- Is IP correct and reachable (ping / telnet)?
+### App Can't Reach Database at 10.0.1.50:3306 – What to Check?
+- Is port 3306 open?
+- Is the database service running?
+- Is firewall/security group allowing traffic?
+- Is IP correct and reachable (ping / telnet)?
