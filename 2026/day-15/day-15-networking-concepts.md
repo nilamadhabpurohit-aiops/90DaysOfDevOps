@@ -110,8 +110,7 @@ Observation
 - To manage IP addresses efficiently
 
 ### CIDR Table
-CIDR	Subnet Mask	Total IPs	Usable Hosts
-CIDR	Subnet Mask	Total IPs	Usable Hosts
+
 | CIDR | Subnet Mask     | Total IPs | Usable Hosts |
 |------|-----------------|-----------|--------------|
 | /24  | 255.255.255.0   | 256       | 254          |
@@ -137,11 +136,15 @@ Common Ports
 
 Command
 ```
-ss -tulpn
+ss -tulpn #Linux Command
+netstat -anv | grep LISTE      # Mac Command                                                                     
+tcp4       0      0  127.0.0.1.32776        *.*                    LISTEN                 0            0  131072  131072              ssh:84809  00100 00000006 000000000046fb79 00000000 00000800      1      0 000000
+tcp4       0      0  127.0.0.1.32777        *.*                    LISTEN                 0            0  131072  131072              ssh:84809  00100 00000006 000000000046fb74 00000000 00000800      1      0 000000
+
 ```
 Sample Observation
-Port 22 → SSH service listening
-Port 53 → DNS service listening
+- Port 84809 → SSH service listening
+- Port 53 → DNS service listening
 
 ## Task 5: Putting It Together
 
