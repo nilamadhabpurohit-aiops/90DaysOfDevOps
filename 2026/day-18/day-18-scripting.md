@@ -41,6 +41,7 @@ Sum is: 30
    - A function `check_disk` that checks disk usage of `/` using `df -h`
    - A function `check_memory` that checks free memory using `free -h`
    - A main section that calls both and prints the results
+
 ```
 ubuntu@ip-172-31-17-136:~/scripts/Task18$ cat disk_check.sh
 #!/bin/bash
