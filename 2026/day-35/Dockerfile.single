@@ -1,0 +1,7 @@
+FROM golang:1.22-alpine
+WORKDIR /app
+COPY . .
+RUN go mod init hello
+RUN go build -o hello app.go
+CMD ["./hello"]
+
