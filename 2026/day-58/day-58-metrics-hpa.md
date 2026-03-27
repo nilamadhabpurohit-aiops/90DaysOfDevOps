@@ -332,7 +332,3 @@ kubectl get pods
 
 Today I learned how Kubernetes automatically scales workloads using the Horizontal Pod Autoscaler based on real resource usage. I observed how Metrics Server enables autoscaling decisions and how Kubernetes balances performance and stability through controlled scaling behavior.
 
-#90DaysOfDevOps  
-#Kubernetes  
-#DevOps  
-#TrainWithShubham
