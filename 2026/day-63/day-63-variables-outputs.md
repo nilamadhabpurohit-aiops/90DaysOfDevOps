@@ -342,3 +342,10 @@ As someone preparing for DevOps roles, this task helped me understand
 how real Terraform projects are written using variables and reusable
 components. It also showed how important dynamic configuration is when
 managing multiple environments like dev, staging and production.
+
+------------------------------------------------------------------------
+
+## Repository Link
+
+GitHub Repository:
+https://github.com/nilamadhabpurohit-aiops/terraform-aws-infrastructure-labs

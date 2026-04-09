@@ -234,3 +234,10 @@ DevOps preparation journey.
 As someone preparing for DevOps roles, this task helped me understand
 how infrastructure automation works in real projects. It also showed how
 important Infrastructure as Code is for scalability and reliability.
+
+------------------------------------------------------------------------
+
+## Repository Link
+
+GitHub Repository:
+https://github.com/nilamadhabpurohit-aiops/terraform-aws-infrastructure-labs

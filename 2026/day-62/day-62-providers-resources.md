@@ -267,3 +267,10 @@ As someone preparing for DevOps, this task helped me understand how
 networking infrastructure is built using Terraform. It also helped me
 understand how Terraform automatically manages dependencies which is
 very important in real production environments.
+
+------------------------------------------------------------------------
+
+## Repository Link
+
+GitHub Repository:
+https://github.com/nilamadhabpurohit-aiops/terraform-aws-infrastructure-labs

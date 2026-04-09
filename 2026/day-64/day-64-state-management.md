@@ -300,3 +300,10 @@ As someone preparing for DevOps roles, this task helped me understand
 why Terraform state is considered the most critical component. Learning
 remote backend and locking showed how real production teams safely
 manage infrastructure changes.
+
+------------------------------------------------------------------------
+
+## Repository Link
+
+GitHub Repository:
+https://github.com/nilamadhabpurohit-aiops/terraform-aws-infrastructure-labs
